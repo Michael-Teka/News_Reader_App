@@ -1,5 +1,7 @@
-// lib/pages/home_page.dart
+
 import 'package:flutter/material.dart';
+import 'package:news_reader/screens/news_list_page.dart';
+import 'package:news_reader/screens/search_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -17,7 +19,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('🗞️ News Reader'),
+        title: const Text('News Reader'),
         actions: [
           IconButton(
             icon: const Icon(Icons.search),

@@ -45,6 +45,7 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor:  const Color.fromARGB(255, 202, 200, 202),
       appBar: AppBar(
         title: const Text('Search News'),
       ),
@@ -56,6 +57,7 @@ class _SearchPageState extends State<SearchPage> {
               controller: _controller,
               onSubmitted: (_) => _searchArticles(),
               decoration: InputDecoration(
+              
                 hintText: 'Search by keyword...',
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.search),

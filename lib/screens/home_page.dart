@@ -1,11 +1,19 @@
-
 import 'package:flutter/material.dart';
-import 'package:news_reader/screens/news_list_page.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:news_reader/Services/api_service.dart';
+import 'package:news_reader/models/article_model.dart';
 import 'package:news_reader/screens/search_page.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  List<Article> _recentArticles = [];
 
   final List<Map<String, dynamic>> categories = const [
     {'name': 'Technology', 'value': 'technology', 'icon': Icons.memory, 'color': Colors.blue},
@@ -17,9 +25,26 @@ class HomePage extends StatelessWidget {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _fetchRecentNews();
+  }
+
+  void _fetchRecentNews() async {
+    try {
+      final recent = await NewsService().fetchNewsByCategory("general");
+      setState(() {
+        _recentArticles = recent.take(5).toList();
+      });
+    } catch (e) {
+      debugPrint("Error loading recent news: $e");
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 82, 6, 92),
       appBar: AppBar(
         title: const Text('🗞️ News Reader'),
         actions: [
@@ -31,35 +56,36 @@ class HomePage extends StatelessWidget {
                 MaterialPageRoute(builder: (_) => const SearchPage()),
               );
             },
-          )
+          ),
+          const SizedBox(width: 4),
+          const Padding(
+            padding: EdgeInsets.only(right: 12),
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(
+                'https://avatars.githubusercontent.com/u/00000000?v=4', // Replace with your image
+              ),
+              radius: 16,
+            ),
+          ),
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Hello 👋',
-              style: GoogleFonts.lato(
-                fontSize: 28,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              'Browse news by category',
-              style: GoogleFonts.lato(fontSize: 16, color: Colors.grey[600]),
-            ),
-            const SizedBox(height: 20),
+            Text("Browse by Category",
+                style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 12),
             Expanded(
+              flex: 2,
               child: GridView.builder(
                 itemCount: categories.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  mainAxisSpacing: 16,
-                  crossAxisSpacing: 16,
-                  childAspectRatio: 1.1,
+                  childAspectRatio: 3.2,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
                 ),
                 itemBuilder: (context, index) {
                   final category = categories[index];
@@ -68,45 +94,102 @@ class HomePage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => NewsListPage(category: category['value']),
+                          builder: (_) =>
+                              CategoryNewsPage(category: category['value']),
                         ),
                       );
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [category['color'].withOpacity(0.7), category['color']],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: category['color'].withOpacity(0.3),
-                            blurRadius: 8,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
+                        color: category['color'].withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: category['color'], width: 1.2),
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(category['icon'], size: 40, color: Colors.white),
-                          const SizedBox(height: 12),
-                          Text(
-                            category['name'],
-                            style: GoogleFonts.lato(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(category['icon'], color: category['color']),
+                            const SizedBox(width: 8),
+                            Text(category['name'],
+                                style: GoogleFonts.lato(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: category['color'],
+                                )),
+                          ],
+                        ),
                       ),
                     ),
                   );
                 },
               ),
+            ),
+            const SizedBox(height: 12),
+            Text("Recent Headlines",
+                style: GoogleFonts.lato(fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 10),
+            SizedBox(
+              height: 140,
+              child: _recentArticles.isEmpty
+                  ? const Center(child: CircularProgressIndicator())
+                  : ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: _recentArticles.length,
+                      itemBuilder: (context, index) {
+                        final article = _recentArticles[index];
+                        return GestureDetector(
+                          onTap: () async {
+                            final url = Uri.parse(article.url);
+                            if (await canLaunchUrl(url)) {
+                              await launchUrl(url);
+                            }
+                          },
+                          child: Container(
+                            width: 250,
+                            margin: const EdgeInsets.only(right: 12),
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12)),
+                              clipBehavior: Clip.antiAlias,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  article.urlToImage != null
+                                      ? Image.network(
+                                          article.urlToImage!,
+                                          height: 80,
+                                          width: double.infinity,
+                                          fit: BoxFit.cover,
+                                          errorBuilder: (_, __, ___) => Container(
+                                            height: 80,
+                                            color: Colors.grey[300],
+                                            alignment: Alignment.center,
+                                            child: const Icon(Icons.broken_image),
+                                          ),
+                                        )
+                                      : Container(
+                                          height: 80,
+                                          color: Colors.grey[300],
+                                          alignment: Alignment.center,
+                                          child: const Icon(Icons.image_not_supported),
+                                        ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      article.title,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: GoogleFonts.lato(fontSize: 14),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
             ),
           ],
         ),

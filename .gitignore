@@ -41,4 +41,4 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-C:\flutter projects\news_reader\lib\Services\api_service.dart
+news_reader\lib\Services\api_service.dart

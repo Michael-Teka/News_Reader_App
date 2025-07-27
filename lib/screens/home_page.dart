@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:news_reader/Services/api_service.dart';
 import 'package:news_reader/models/article_model.dart';
+import 'package:news_reader/screens/news_list_page.dart';
 import 'package:news_reader/screens/search_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -70,7 +71,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -83,9 +84,9 @@ class _HomePageState extends State<HomePage> {
                 itemCount: categories.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: 3.2,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
+                  childAspectRatio: 1.7,
+                  crossAxisSpacing: 14,
+                  mainAxisSpacing: 14,
                 ),
                 itemBuilder: (context, index) {
                   final category = categories[index];
@@ -95,7 +96,7 @@ class _HomePageState extends State<HomePage> {
                         context,
                         MaterialPageRoute(
                           builder: (_) =>
-                              CategoryNewsPage(category: category['value']),
+                              NewsListPage(category: category['value']),
                         ),
                       );
                     },
@@ -125,12 +126,12 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 2),
             Text("Recent Headlines",
                 style: GoogleFonts.lato(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
             SizedBox(
-              height: 140,
+              height: 180,
               child: _recentArticles.isEmpty
                   ? const Center(child: CircularProgressIndicator())
                   : ListView.builder(

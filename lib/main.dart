@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:news_reader/Services/news_provider.dart';
 import 'package:news_reader/screens/home_page.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp( MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => NewsProvider()),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

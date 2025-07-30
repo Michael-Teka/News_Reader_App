@@ -36,10 +36,10 @@ class _BottomNavigationwidgetState extends State<BottomNavigationwidget> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        // selectedItemColor: Colors.white,
-        // unselectedItemColor: Colors.grey[400],
-        // backgroundColor: Colors.black,
-        items: const <BottomNavigationBarItem>[
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.grey[400],
+        backgroundColor: Colors.green,
+        items: const[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',

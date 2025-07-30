@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:news_reader/Services/api_service.dart';
 import 'package:news_reader/models/article_model.dart';
-import 'package:news_reader/screens/bookmark_page.dart';
 import 'package:news_reader/screens/news_list_page.dart';
-import 'package:news_reader/screens/search_page.dart';
 import 'package:news_reader/widget/wigdets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -79,28 +77,6 @@ class _HomePageState extends State<HomePage> {
       appBar: const AppBarWidget(
         title: 'News Reader',
         actions: [
-          // IconButton(
-          //   icon: const Icon(Icons.bookmark),
-          //   onPressed: () {
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(builder: (_) => const BookmarkPage()),
-          //     );
-          //   },
-          // ),
-          // IconButton(
-          //   icon: const Icon(
-          //     Icons.search,
-          //     color: Colors.white,
-          //   ),
-          //   onPressed: () {
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(builder: (_) => const SearchPage()),
-          //     );
-          //   },
-          // ),
-
           SizedBox(width: 4),
           Padding(
             padding: EdgeInsets.only(right: 12),

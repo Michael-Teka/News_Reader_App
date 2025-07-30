@@ -24,7 +24,14 @@ class _NewsListPageState extends State<NewsListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.category.toUpperCase())),
+      appBar: AppBar(
+        title: Text(widget.category,
+        style: const TextStyle(
+          color: Colors.white,
+        )
+        ),
+        backgroundColor: Colors.black87,
+      ),
       body: Consumer<NewsProvider>(
         builder: (context, provider, _) {
           if (provider.isLoading) {

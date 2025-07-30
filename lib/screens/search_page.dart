@@ -47,7 +47,12 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       backgroundColor:  const Color.fromARGB(255, 202, 200, 202),
       appBar: AppBar(
-        title: const Text('Search News'),
+        title: const Text('Search News',
+        style: TextStyle(
+          color: Colors.white,
+        ),
+        ),
+        backgroundColor: Colors.black,
       ),
       body: Padding(
         padding: const EdgeInsets.all(12),

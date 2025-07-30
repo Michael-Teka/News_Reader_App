@@ -17,12 +17,12 @@ class _HomePageState extends State<HomePage> {
   List<Article> _recentArticles = [];
 
   final List<Map<String, dynamic>> categories = const [
-    {'name': 'Technology', 'value': 'technology', 'icon': Icons.memory, 'color': Colors.blue},
-    {'name': 'Business', 'value': 'business', 'icon': Icons.business_center, 'color': Colors.green},
-    {'name': 'Sports', 'value': 'sports', 'icon': Icons.sports_soccer, 'color': Colors.orange},
-    {'name': 'Health', 'value': 'health', 'icon': Icons.health_and_safety, 'color': Colors.red},
-    {'name': 'Science', 'value': 'science', 'icon': Icons.science, 'color': Colors.purple},
-    {'name': 'Entertainment', 'value': 'entertainment', 'icon': Icons.movie, 'color': Colors.pink},
+    {'name': 'Technology', 'value': 'Technology', 'icon': Icons.memory, 'color': Colors.blue},
+    {'name': 'Business', 'value': 'Business', 'icon': Icons.business_center, 'color': Colors.green},
+    {'name': 'Sports', 'value': 'Sports', 'icon': Icons.sports_soccer, 'color': Colors.orange},
+    {'name': 'Health', 'value': 'Health', 'icon': Icons.health_and_safety, 'color': Colors.red},
+    {'name': 'Science', 'value': 'Science', 'icon': Icons.science, 'color': Colors.purple},
+    {'name': 'Entertainment', 'value': 'Entertainment', 'icon': Icons.movie, 'color': Colors.pink},
   ];
 
   @override
@@ -47,10 +47,18 @@ class _HomePageState extends State<HomePage> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('🗞️ News Reader'),
+        backgroundColor: Colors.black,
+        title: const Text(
+          '🗞️ News Reader',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+          ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.search),
+            icon: const Icon(Icons.search,
+            color: Colors.white,
+            ),
             onPressed: () {
               Navigator.push(
                 context,

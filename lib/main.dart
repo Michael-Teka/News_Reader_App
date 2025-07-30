@@ -20,17 +20,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'News Reader',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(),
+      theme: ThemeData.light().copyWith(
+        appBarTheme: const AppBarTheme(
+          iconTheme: IconThemeData(color: Colors.white),
+        ),
+      ),
       darkTheme: ThemeData.dark(),
       themeMode: ThemeMode.system,
       home: const HomePage(),
-      // debugShowCheckedModeBanner: false,
-      // title: ' News Reader',
-      // theme: ThemeData(
-      //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      //   useMaterial3: true,
-      // ),
-      // home: const HomePage(),
     );
   }
 }

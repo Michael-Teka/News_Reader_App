@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:news_reader/Services/bookmark_provider.dart';
 import 'package:news_reader/Services/news_provider.dart';
+import 'package:news_reader/widget/wigdets.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -23,14 +25,11 @@ class _NewsListPageState extends State<NewsListPage> {
 
   @override
   Widget build(BuildContext context) {
+    final bookmarkProvider = Provider.of<BookmarkProvider>(context);
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.category,
-        style: const TextStyle(
-          color: Colors.white,
-        )
-        ),
-        backgroundColor: Colors.black87,
+      appBar: AppBarWidget(
+        title: widget.category,
       ),
       body: Consumer<NewsProvider>(
         builder: (context, provider, _) {
@@ -52,6 +51,16 @@ class _NewsListPageState extends State<NewsListPage> {
                   ListTile(
                     title: Text(article.title),
                     subtitle: Text(article.source),
+                    trailing: IconButton(
+                      icon: Icon(
+                        bookmarkProvider.isBookmarked(article)
+                            ? Icons.bookmark
+                            : Icons.bookmark_border,
+                      ),
+                      onPressed: () {
+                        bookmarkProvider.toggleBookmark(article);
+                      },
+                    ),
                     onTap: () async {
                       final url = Uri.parse(article.url);
                       if (await canLaunchUrl(url)) {

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:news_reader/Services/api_service.dart';
 import 'package:news_reader/models/article_model.dart';
+import 'package:news_reader/screens/bookmark_page.dart';
 import 'package:news_reader/screens/news_list_page.dart';
 import 'package:news_reader/screens/search_page.dart';
+import 'package:news_reader/widget/wigdets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,12 +19,42 @@ class _HomePageState extends State<HomePage> {
   List<Article> _recentArticles = [];
 
   final List<Map<String, dynamic>> categories = const [
-    {'name': 'Technology', 'value': 'Technology', 'icon': Icons.memory, 'color': Colors.blue},
-    {'name': 'Business', 'value': 'Business', 'icon': Icons.business_center, 'color': Colors.green},
-    {'name': 'Sports', 'value': 'Sports', 'icon': Icons.sports_soccer, 'color': Colors.orange},
-    {'name': 'Health', 'value': 'Health', 'icon': Icons.health_and_safety, 'color': Colors.red},
-    {'name': 'Science', 'value': 'Science', 'icon': Icons.science, 'color': Colors.purple},
-    {'name': 'Entertainment', 'value': 'Entertainment', 'icon': Icons.movie, 'color': Colors.pink},
+    {
+      'name': 'Technology',
+      'value': 'Technology',
+      'icon': Icons.memory,
+      'color': Colors.blue
+    },
+    {
+      'name': 'Business',
+      'value': 'Business',
+      'icon': Icons.business_center,
+      'color': Colors.green
+    },
+    {
+      'name': 'Sports',
+      'value': 'Sports',
+      'icon': Icons.sports_soccer,
+      'color': Colors.orange
+    },
+    {
+      'name': 'Health',
+      'value': 'Health',
+      'icon': Icons.health_and_safety,
+      'color': Colors.red
+    },
+    {
+      'name': 'Science',
+      'value': 'Science',
+      'icon': Icons.science,
+      'color': Colors.purple
+    },
+    {
+      'name': 'Entertainment',
+      'value': 'Entertainment',
+      'icon': Icons.movie,
+      'color': Colors.pink
+    },
   ];
 
   @override
@@ -46,18 +78,22 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: const Text(
-          '🗞️ News Reader',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-          ),
+      appBar: AppBarWidget(
+        title: 'News Reader',
         actions: [
           IconButton(
-            icon: const Icon(Icons.search,
-            color: Colors.white,
+            icon: const Icon(Icons.bookmark),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const BookmarkPage()),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(
+              Icons.search,
+              color: Colors.white,
             ),
             onPressed: () {
               Navigator.push(
@@ -66,6 +102,7 @@ class _HomePageState extends State<HomePage> {
               );
             },
           ),
+
           const SizedBox(width: 4),
           const Padding(
             padding: EdgeInsets.only(right: 12),
@@ -84,7 +121,8 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text("Browse by Category",
-                style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.bold)),
+                style: GoogleFonts.lato(
+                    fontSize: 20, fontWeight: FontWeight.bold)),
             const SizedBox(height: 12),
             Expanded(
               flex: 2,
@@ -112,7 +150,8 @@ class _HomePageState extends State<HomePage> {
                       decoration: BoxDecoration(
                         color: category['color'].withOpacity(0.1),
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: category['color'], width: 1.2),
+                        border:
+                            Border.all(color: category['color'], width: 1.2),
                       ),
                       child: Center(
                         child: Row(
@@ -136,7 +175,8 @@ class _HomePageState extends State<HomePage> {
             ),
             const SizedBox(height: 2),
             Text("Recent Headlines",
-                style: GoogleFonts.lato(fontSize: 18, fontWeight: FontWeight.bold)),
+                style: GoogleFonts.lato(
+                    fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
             SizedBox(
               height: 180,
@@ -170,18 +210,21 @@ class _HomePageState extends State<HomePage> {
                                           height: 80,
                                           width: double.infinity,
                                           fit: BoxFit.cover,
-                                          errorBuilder: (_, __, ___) => Container(
+                                          errorBuilder: (_, __, ___) =>
+                                              Container(
                                             height: 80,
                                             color: Colors.grey[300],
                                             alignment: Alignment.center,
-                                            child: const Icon(Icons.broken_image),
+                                            child:
+                                                const Icon(Icons.broken_image),
                                           ),
                                         )
                                       : Container(
                                           height: 80,
                                           color: Colors.grey[300],
                                           alignment: Alignment.center,
-                                          child: const Icon(Icons.image_not_supported),
+                                          child: const Icon(
+                                              Icons.image_not_supported),
                                         ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),

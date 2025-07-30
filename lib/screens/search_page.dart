@@ -1,6 +1,7 @@
 // lib/pages/search_page.dart
 import 'package:flutter/material.dart';
 import 'package:news_reader/Services/api_service.dart';
+import 'package:news_reader/widget/wigdets.dart';
 import '../models/article_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -46,13 +47,8 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor:  const Color.fromARGB(255, 202, 200, 202),
-      appBar: AppBar(
-        title: const Text('Search News',
-        style: TextStyle(
-          color: Colors.white,
-        ),
-        ),
-        backgroundColor: Colors.black,
+      appBar: const AppBarWidget(
+        title:  'Search News',
       ),
       body: Padding(
         padding: const EdgeInsets.all(12),

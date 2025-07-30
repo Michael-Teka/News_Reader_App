@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:news_reader/Services/bookmark_provider.dart';
 import 'package:news_reader/Services/news_provider.dart';
 import 'package:news_reader/screens/home_page.dart';
+import 'package:news_reader/widget/bottom_navigation.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
       ),
       darkTheme: ThemeData.dark(),
       themeMode: ThemeMode.system,
-      home: const HomePage(),
+      home: const BottomNavigationwidget(),
     );
   }
 }

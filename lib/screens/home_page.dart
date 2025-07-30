@@ -17,7 +17,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<Article> _recentArticles = [];
-
   final List<Map<String, dynamic>> categories = const [
     {
       'name': 'Technology',
@@ -56,7 +55,6 @@ class _HomePageState extends State<HomePage> {
       'color': Colors.pink
     },
   ];
-
   @override
   void initState() {
     super.initState();
@@ -78,33 +76,33 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      appBar: AppBarWidget(
+      appBar: const AppBarWidget(
         title: 'News Reader',
         actions: [
-          IconButton(
-            icon: const Icon(Icons.bookmark),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const BookmarkPage()),
-              );
-            },
-          ),
-          IconButton(
-            icon: const Icon(
-              Icons.search,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const SearchPage()),
-              );
-            },
-          ),
+          // IconButton(
+          //   icon: const Icon(Icons.bookmark),
+          //   onPressed: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(builder: (_) => const BookmarkPage()),
+          //     );
+          //   },
+          // ),
+          // IconButton(
+          //   icon: const Icon(
+          //     Icons.search,
+          //     color: Colors.white,
+          //   ),
+          //   onPressed: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(builder: (_) => const SearchPage()),
+          //     );
+          //   },
+          // ),
 
-          const SizedBox(width: 4),
-          const Padding(
+          SizedBox(width: 4),
+          Padding(
             padding: EdgeInsets.only(right: 12),
             child: CircleAvatar(
               backgroundImage: NetworkImage(
@@ -115,7 +113,8 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: Padding(
+      body:
+      Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -179,7 +178,7 @@ class _HomePageState extends State<HomePage> {
                     fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
             SizedBox(
-              height: 180,
+              height: 150,
               child: _recentArticles.isEmpty
                   ? const Center(child: CircularProgressIndicator())
                   : ListView.builder(
@@ -247,5 +246,6 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+    // );
   }
 }

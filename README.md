@@ -20,6 +20,8 @@ The News Reader App is a simple and clean Flutter application that fetches and d
 - **URL Launcher** (to open news links)
 - **Local Storage** (for saving bookmarks)
 
+## 📸 Screenshots
+
   ![Screenshot](https://github.com/Michael-Teka/News_Reader_App/blob/main/Screenshot%202025-07-30%20163804.png)
   ![Screenshot](https://github.com/Michael-Teka/News_Reader_App/blob/main/Screenshot%202025-07-30%20164002.png)
   ![Screenshot](https://github.com/Michael-Teka/News_Reader_App/blob/main/Screenshot%202025-07-30%20164100.png)
